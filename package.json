@@ -1,7 +1,7 @@
 {
   "name": "fe_gulp2024",
   "description": "Gulp Starter FE 2024",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,6 +26,7 @@
     "gulp-changed": "^4.0.3",
     "gulp-clean": "^0.4.0",
     "gulp-csso": "^4.0.1",
+    "gulp-cwebp": "^4.0.2",
     "gulp-ext-replace": "^0.3.0",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter-fix": "^0.0.1",

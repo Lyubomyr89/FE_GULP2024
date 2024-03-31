@@ -1,25 +1,49 @@
+// Імпорт основного модуля Gulp для управління завданнями
 const gulp = require('gulp');
 
-// Tasks
-require('./gulp/dev.js');
-require('./gulp/prod.js');
-require('./gulp/fontsDev.js');
-require('./gulp/fontsProd.js');
+// Імпорт окремих завдань Gulp з підкаталогів для різних середовищ та цілей
+require('./gulp/dev.js'); // Завдання для розробницького середовища
+require('./gulp/prod.js'); // Завдання для продуктивного середовища
+require('./gulp/fontsDev.js'); // Завдання для обробки шрифтів у розробницькому середовищі
+require('./gulp/fontsProd.js'); // Завдання для обробки шрифтів у продуктивному середовищі
 
+// Основне завдання для розробки (default)
 gulp.task(
 	'default',
 	gulp.series(
-		'clean:dev', 'fontsDev',
-		gulp.parallel('html:dev', 'sass:dev', 'images:dev', gulp.series('svgStack:dev', 'svgSymbol:dev'), 'files:dev', 'js:dev'),
-		gulp.parallel('server:dev', 'watch:dev')
+		'clean:dev', // Початкове очищення каталогу розробки
+		'fontsDev', // Обробка шрифтів для розробницького середовища
+		gulp.parallel( // Паралельне виконання основних завдань розробки
+			'html:dev', // Обробка HTML
+			'sass:dev', // Компіляція SASS в CSS
+			'images:dev', // Оптимізація зображень
+			gulp.series('svgStack:dev', 'svgSymbol:dev'), // Створення SVG спрайтів
+			'files:dev', // Копіювання статичних файлів
+			'js:dev' // Обробка JavaScript
+		),
+		gulp.parallel( // Паралельне виконання сервісних завдань
+			'server:dev', // Запуск сервера з live reload
+			'watch:dev' // Відстеження змін у файлах
+		)
 	)
 );
 
+// Завдання для підготовки до розгортання в продуктивне середовище (prod)
 gulp.task(
 	'prod',
 	gulp.series(
-		'clean:prod', 'fontsProd',
-		gulp.parallel('html:prod', 'sass:prod', 'images:prod', gulp.series('svgStack:prod', 'svgSymbol:prod'), 'files:prod', 'js:prod'),
-		gulp.parallel('server:prod')
+		'clean:prod', // Очищення каталогу продуктивного середовища
+		'fontsProd', // Обробка шрифтів для продуктивного середовища
+		gulp.parallel( // Паралельне виконання основних завдань для продуктивного середовища
+			'html:prod', // Обробка HTML
+			'sass:prod', // Компіляція та оптимізація CSS
+			'images:prod', // Оптимізація зображень
+			gulp.series('svgStack:prod', 'svgSymbol:prod'), // Створення SVG спрайтів
+			'files:prod', // Копіювання статичних файлів
+			'js:prod' // Обробка та оптимізація JavaScript
+		),
+		gulp.parallel( // Запуск додаткових завдань для продуктивного середовища
+			'server:prod' // Можливий запуск сервера для огляду продуктивного середовища
+		)
 	)
 );
