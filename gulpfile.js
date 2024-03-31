@@ -47,3 +47,21 @@ gulp.task(
 		)
 	)
 );
+
+
+gulp.task(
+	'zip-prod',
+	gulp.series(
+		'clean:prod', // Очищення каталогу продуктивного середовища
+		'fontsProd', // Обробка шрифтів для продуктивного середовища
+		gulp.parallel( // Паралельне виконання основних завдань для продуктивного середовища
+			'html:prod', // Обробка HTML
+			'sass:prod', // Компіляція та оптимізація CSS
+			'images:prod', // Оптимізація зображень
+			gulp.series('svgStack:prod', 'svgSymbol:prod'), // Створення SVG спрайтів
+			'files:prod', // Копіювання статичних файлів
+			'js:prod' // Обробка та оптимізація JavaScript
+		),
+		'zip:prod', // Завдання для створення .zip архіву
+	)
+);

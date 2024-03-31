@@ -66,7 +66,7 @@ gulp.task('ttfToWoff', () => {
 
 gulp.task('fontsStyle', () => {
 	// Файл стилів для підключення шрифтів
-	let fontsFile = `${srcFolder}/scss/base/_fontsAutoGen.scss`;
+	let fontsFile = `${srcFolder}/scss/base/_fontsAutoInclude.scss`;
 	// Перевіряємо чи існують файли шрифтів
 	fs.readdir(`${destFolder}/fonts/`, function (err, fontsFiles) {
 		if (fontsFiles) {
